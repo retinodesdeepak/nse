@@ -529,13 +529,6 @@ app.get('/api/equity/intraday/:symbol', async (req, res) => {
  *         schema:
  *           type: string
  *           format: date
- *       - name: series
- *         in: path
- *         description: NSE Symbol Series of the Equity
- *         required: true
- *         schema:
- *           type: string
- *           format: any
  *     responses:
  *       200:
  *         description: Returns a historical data of the NSE symbol
@@ -546,7 +539,6 @@ app.get('/api/equity/historical/:symbol', async (req, res) => {
     try {
         const dateStart = req.query.dateStart as string
         const dateEnd = req.query.dateEnd as string
-        const series = req.query.series as string
         if (dateStart && dateEnd) {
             const start = new Date(dateStart)
             const end = new Date(dateEnd)
@@ -555,7 +547,7 @@ app.get('/api/equity/historical/:symbol', async (req, res) => {
                     start,
                     end
                 }
-                res.json(await nseIndia.getEquityHistoricalData(req.params.symbol, range, series))
+                res.json(await nseIndia.getEquityHistoricalData(req.params.symbol, range))
             } else {
                 res.status(400).json({ error: 'Invalid date format. Please use the format (YYYY-MM-DD)' })
             }

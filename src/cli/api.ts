@@ -159,14 +159,11 @@ export async function showHistorical(argv: any) {
     const {
         symbol
     } = argv
-    const {
-        series
-    } = argv
     const spinner = ora()
     spinner.text = 'Loading Historical Data'
     spinner.start()
     const startDate = moment().subtract(3, 'months').format('YYYY-MM-DD')
-    const results = await nse.getEquityHistoricalData(symbol, { start: new Date(startDate), end: new Date() }, series)
+    const results = await nse.getEquityHistoricalData(symbol, { start: new Date(startDate), end: new Date() })
     spinner.text = ''
     spinner.stop()
     const ohlcData: any[] = []
